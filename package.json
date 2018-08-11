@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@dharmaprotocol/dharma.js": "^0.1.53"
+  }
+}
