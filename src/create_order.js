@@ -1,13 +1,20 @@
 import Dharma from '@dharmaprotocol/dharma.js'
 import BigNumber from 'bignumber.js'
+import web3Utils from 'web3-utils'
 
 const dharma = new Dharma('https://kovan.infura.io/RNXFMnEXo6TEeIYzcTyQ')
+//global.Dharma = Dharma
+//global.dharma = dharma
 
 const hash = (object) => {
-    
+    const toHash = []
+    for (let key in object) {
+        toHash.push(object[key])
+    }
+    return web3Utils.soliditySha3(toHash)
 }
 
-const createOrder = async (request) => {
+const createOrder = async (body) => {
     const {
         principalAmount,
         principalToken,
@@ -19,7 +26,7 @@ const createOrder = async (request) => {
         debtorAddress,
         expiresInDuration,
         expiresInUnit,
-    } = request.body
+    } = body
 
     const debtKernel = await dharma.contracts.loadDebtKernelAsync()
     const termsContract = await dharma.contracts.loadCollateralizedSimpleInterestTermsContract()
@@ -64,6 +71,7 @@ const createOrder = async (request) => {
 
     debtOrder.toSign = hash(debtOrder)
     
-    
+    return debtOrder
 }
 
+export default createOrder

@@ -2,24 +2,20 @@ import express from 'express'
 import createOrder from './create_order'
 import db from './db'
 
-import Dharma from '@dharmaprotocol/dharma.js'
-
-const dharma = new Dharma(`http://eth.bohendo.com:8545`)
-//global.Dharma = Dharma
-//global.dharma = dharma
-
 const api = express.Router()
 
 api.get('/get', (request, response) => {
     response.json(db.getLoanRequests())
 })
 
-api.get('/create', (request, response) => {
-    createOrder(request.body)
-    response.send('Creating Loan request')
+api.post('/create', (request, response) => {
+    console.log(Object.keys(request.body))
+    response.json(createOrder(request.body))
 })
 
 api.get('/submit', (request, response) => {
+
+    response.json(db.saveLoanRequests())
     response.send('Submitting signed loan request to the order book')
 })
 

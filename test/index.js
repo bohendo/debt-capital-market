@@ -41,16 +41,17 @@ const debtor_to_sign = {
 
 describe('Debt Capital Market API', () => {
     it('should respond', () => {
-        request.post(url, {}, (error, response, body) => {
+        request.get(url, {}, (error, response, body) => {
             expect(error).to.not.exist
             expect(response).to.exist
         })
     })
 
     it('should give the client signable data if given a debtor request', () => {
-        request.post(url + '/api/loan_request/create', debtor_request, (error, response, body) => {
+        request.post(url + '/api/create', debtor_request, (error, response, body) => {
             expect(error).to.not.exist
             expect(response).to.exist
+            console.log(JSON.stringify(body, null, 2))
         })
     })
 
