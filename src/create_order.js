@@ -6,14 +6,6 @@ const dharma = new Dharma('https://kovan.infura.io/RNXFMnEXo6TEeIYzcTyQ')
 //global.Dharma = Dharma
 //global.dharma = dharma
 
-const hash = (object) => {
-    const toHash = []
-    for (let key in object) {
-        toHash.push(object[key])
-    }
-    return web3Utils.soliditySha3(toHash)
-}
-
 const createOrder = async (body) => {
     const {
         principalAmount,
@@ -51,11 +43,11 @@ const createOrder = async (body) => {
         underwriter: null,
         underwriterRiskRating: 0,
         termsContract: termsContract.address,
-        termsContractParameters: dharma.adapters.collateralizedSimpleInterestloan.packParameters(siTermContractParams, collateralizedParams),
+        termsContractParameters: dharma.adapters.collateralizedSimpleInterestLoan.packParameters(siTermContractParams, collateralizedParams),
         salt: BigNumber.random(20).times(new BigNumber(10).pow(20)),
     }
 
-    issuance.agreementId = hash(issuance)
+    issuance.agreementId = web3Utils.soliditySha3(issuance)
 
     const debtOrder = {
         agreementId: issuance.agreementId,
@@ -69,7 +61,7 @@ const createOrder = async (body) => {
         expirationTimestampInSec: 0
     }
 
-    debtOrder.toSign = hash(debtOrder)
+    debtOrder.toSign = web3Utils.soliditySha3(debtOrder)
     
     return debtOrder
 }

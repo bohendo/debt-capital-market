@@ -9,8 +9,9 @@ api.get('/get', (request, response) => {
 })
 
 api.post('/create', (request, response) => {
-    console.log(Object.keys(request.body))
-    response.json(createOrder(request.body))
+    return createOrder(request.body).then(order => {
+        return response.json(order)
+    })
 })
 
 api.get('/submit', (request, response) => {

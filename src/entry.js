@@ -14,13 +14,8 @@ router.use((request, response, next) => {
     next()
 })
 
-router.use('/api', api)
-
 // Add real endpoints here
-router.get('/', (request, response) => {
-    console.log('hello world')
-    response.send('Hello World')
-})
+router.use('/api', api)
 
 // End of pipeline
 router.use((request, response) => {

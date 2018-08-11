@@ -47,13 +47,18 @@ describe('Debt Capital Market API', () => {
         })
     })
 
-    it('should give the client signable data if given a debtor request', () => {
-        request.post(url + '/api/create', debtor_request, (error, response, body) => {
+    it('should give the client signable data if given a debtor request', (done) => {
+        return request.post({
+            url: url + '/api/create',
+            json: true,
+            body: debtor_request,
+        }, (error, response, body) => {
             expect(error).to.not.exist
             expect(response).to.exist
-            console.log(JSON.stringify(body, null, 2))
+            expect(body.toSign).to.exist
+            done()
         })
-    })
+    }).timeout(20000)
 
     it('should save signed loan requests in the db', () => { })
 
