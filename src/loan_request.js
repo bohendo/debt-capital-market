@@ -1,6 +1,10 @@
 import express from 'express'
 import Dharma from '@dharmaprotocol/dharma.js'
 
+const dharma = new Dharma(`http://eth.bohendo.com:8545`)
+//global.Dharma = Dharma
+//global.dharma = dharma
+
 import db from './db'
 
 const api = express.Router()
