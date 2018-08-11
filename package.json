@@ -1,4 +1,14 @@
 {
+  "name": "dharma-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://gitlab.com/bohendo/dharma-api",
+  "author": "Bo Henderson <bohende@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+      "watch": "./node_modules/.bin/webpack --watch --config ops/webpack.js",
+      "start": "node build/dharma-api.js"
+  },
   "dependencies": {
     "@dharmaprotocol/dharma.js": "^0.1.53",
     "babel-core": "^6.26.3",

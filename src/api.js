@@ -8,14 +8,4 @@ api.get('/request-loan', (request, response) => {
     response.send('Hello World')
 })
 
-api.get('/', (request, response) => {
-    console.log('hello world')
-    response.send('Hello World')
-})
-
-api.get('/', (request, response) => {
-    console.log('hello world')
-    response.send('Hello World')
-})
-
 export default api
