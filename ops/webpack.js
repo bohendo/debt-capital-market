@@ -7,9 +7,7 @@ module.exports = {
 
     externals: ['electron'],
 
-    entry: { 
-        entry: './src/entry.js',
-    },
+    entry: ['babel-polyfill', './src/entry.js'],
 
     output: {
         path: path.join(__dirname, '../build'),

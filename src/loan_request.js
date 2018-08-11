@@ -1,5 +1,5 @@
 import express from 'express'
-import Dharma from '@dharmaprotocol/dharma.js'
+import createOrder from './create_order'
 
 const api = express.Router()
 
@@ -8,6 +8,7 @@ api.get('/get', (request, response) => {
 })
 
 api.get('/create', (request, response) => {
+    createOrder(request.body)
     response.send('Creating Loan request')
 })
 
