@@ -1,11 +1,11 @@
 import express from 'express'
-import Dharma from '@dharmaprotocol/dharma.js'
+
+import loanRequest from './loan_request'
+import loan from './loan'
 
 const api = express.Router()
 
-api.get('/request-loan', (request, response) => {
-    console.log('Creating Loan request')
-    response.send('Creating Loan request')
-})
+api.use('/loan_request', loanRequest)
+api.use('/loan', loan)
 
 export default api

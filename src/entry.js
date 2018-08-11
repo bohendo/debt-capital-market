@@ -2,6 +2,13 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import api from './api'
 
+import Dharma from '@dharmaprotocol/dharma.js'
+console.log(Object.keys(Dharma.Types))
+const types = Object.keys(Dharma.Types)
+for (let type in types) {
+    console.log(`type ${types[type]} has keys ${Object.keys(Dharma.Types[types[type]])}`)
+}
+
 const router = express.Router()
 
 router.use(bodyParser.json())
