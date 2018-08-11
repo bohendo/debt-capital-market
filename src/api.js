@@ -5,7 +5,7 @@ const api = express.Router()
 
 api.get('/request-loan', (request, response) => {
     console.log('Creating Loan request')
-    response.send('Hello World')
+    response.send('Creating Loan request')
 })
 
 export default api

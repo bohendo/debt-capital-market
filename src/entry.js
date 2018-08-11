@@ -38,6 +38,6 @@ router.use((error, request, response) => {
 
 const port = 8000
 express().use(router).listen(port, () => {
-    console.log(`Starting app in environment: ${JSON.stringify(process.env, null, 2)}`)
+    //console.log(`Starting app in environment: ${JSON.stringify(process.env, null, 2)}`)
     console.log(`listening on port ${port}`)
 })

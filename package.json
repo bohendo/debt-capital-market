@@ -6,8 +6,8 @@
   "author": "Bo Henderson <bohende@gmail.com>",
   "license": "MIT",
   "scripts": {
-      "watch": "./node_modules/.bin/webpack --watch --config ops/webpack.js",
-      "start": "node build/dharma-api.js"
+    "watch": "./node_modules/.bin/webpack --watch --config ops/webpack.js & ./node_modules/.bin/nodemon build/dharma-api.js",
+    "start": "node build/dharma-api.js"
   },
   "dependencies": {
     "@dharmaprotocol/dharma.js": "^0.1.53",
@@ -16,6 +16,7 @@
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "nodemon": "^1.18.3",
     "web3": "^1.0.0-beta.35",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0"
