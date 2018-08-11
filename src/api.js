@@ -1,10 +1,34 @@
 import express from 'express'
-import loanRequest from './loan_request'
-import loan from './loan'
+import createOrder from './create_order'
+import db from './db'
+
+import Dharma from '@dharmaprotocol/dharma.js'
+
+const dharma = new Dharma(`http://eth.bohendo.com:8545`)
+//global.Dharma = Dharma
+//global.dharma = dharma
 
 const api = express.Router()
 
-api.use('/loan_request', loanRequest)
-api.use('/loan', loan)
+api.get('/get', (request, response) => {
+    response.json(db.getLoanRequests())
+})
+
+api.get('/create', (request, response) => {
+    createOrder(request.body)
+    response.send('Creating Loan request')
+})
+
+api.get('/submit', (request, response) => {
+    response.send('Submitting signed loan request to the order book')
+})
+
+api.get('/cancel', (request, response) => {
+    response.send('Cancelling Loan request')
+})
+
+api.get('/fill', (request, response) => {
+    response.send(`Filling loan request with creditor's signature`)
+})
 
 export default api

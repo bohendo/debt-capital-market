@@ -23,21 +23,21 @@ const agreement_id = {
     underwriter: '',
     underwriterRiskRating: '',
     termsContract: '',
-    termsContractParameters: '0x04000000000de0b6b3a7640000009c40200030000000001bc16d674ec8000'
+    termsContractParameters: '0x04000000000de0b6b3a7640000009c40200030000000001bc16d674ec8000',
     salt: 'abc123'
 }
 
-const debtor_to_sign = [
-    agreementId: hash(agreement_id)
+const debtor_to_sign = {
+    agreementId: '',
     underwriterFee: 0,
-    principalAmount: 5
+    principalAmount: 5,
     principalToken: "WETH",
     debtorFee: 0,
     creditorFee: 0,
     relayer: process.env.ETH_ADDRESS,
     relayerFee: debtor_request * 0.05,
     expirationTimestampInSec: 60*60*24*5
-]
+}
 
 describe('Debt Capital Market API', () => {
     it('should respond', () => {
