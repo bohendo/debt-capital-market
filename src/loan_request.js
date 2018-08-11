@@ -1,14 +1,20 @@
 import express from 'express'
 import Dharma from '@dharmaprotocol/dharma.js'
 
+import db from './db'
+
 const api = express.Router()
 
 api.get('/get', (request, response) => {
-    response.send('Fetching Loan requests...')
+    response.json(db.getLoanRequests())
 })
 
 api.get('/create', (request, response) => {
     response.send('Creating Loan request')
+})
+
+api.get('/submit', (request, response) => {
+    response.send('Submitting signed loan request to the order book')
 })
 
 api.get('/cancel', (request, response) => {
@@ -16,7 +22,7 @@ api.get('/cancel', (request, response) => {
 })
 
 api.get('/fill', (request, response) => {
-    response.send('Filling Loan request')
+    response.send(`Filling loan request with creditor's signature`)
 })
 
 export default api
