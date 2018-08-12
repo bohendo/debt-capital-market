@@ -1,6 +1,7 @@
 import express from 'express'
 import createOrder from './create_order'
 import db from './db'
+import fillOrder from './fill'
 
 const api = express.Router()
 
@@ -35,7 +36,9 @@ api.post('/cancel', (request, response) => {
 })
 
 api.get('/fill', (request, response) => {
-    response.send(fillOrder(request.body))
+    fillOrder(request.body).then(done => {
+        response.send(done)
+    })
 })
 
 export default api

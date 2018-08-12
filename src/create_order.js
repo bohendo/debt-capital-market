@@ -92,6 +92,7 @@ const createOrder = async (body) => {
     }
 
     const debtOrder = {
+        issuance,
         loanRequest,
         loanRequestHash: web3Utils.soliditySha3(loanRequest),
         terms: {
