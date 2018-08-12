@@ -23,7 +23,7 @@ describe('Debt Capital Market API', () => {
         }, (error, response, body) => {
             expect(error).to.not.exist
             expect(response).to.exist
-            expect(body.toSign).to.exist
+            expect(body.loanRequestHash).to.exist
             // sign order
             const signed_order = body
             signed_order.v = 1
@@ -45,7 +45,7 @@ describe('Debt Capital Market API', () => {
             url: url + '/api/get'
         }, (error, response, body) => {
             expect(error).to.not.exist
-            console.log(`Got body: ${JSON.stringify(body)}`)
+            console.log(`Creditor assessing options: ${JSON.stringify(body, null, 2)}`)
             done()
         })
     })
