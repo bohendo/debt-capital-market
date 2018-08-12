@@ -2,6 +2,9 @@ import request from 'request'
 import chai from 'chai'
 import mocks from './mocks'
 
+import ethutils from 'ethereumjs-util'
+import keys from 'keythereum'
+
 const { debtor_request } = mocks
 
 const expect = chai.expect
@@ -24,17 +27,24 @@ describe('Debt Capital Market API', () => {
             expect(error).to.not.exist
             expect(response).to.exist
             expect(body.loanRequestHash).to.exist
+
             // sign order
+            const pk = keys.create().privateKey
+            const signature = ethutils.ecsign(ethutils.toBuffer(body.loanRequestHash), pk)
             const signed_order = body
-            signed_order.v = 1
-            signed_order.r = 2
-            signed_order.s = 3
+            signed_order.debtor_signature = {}
+            signed_order.debtor_signature.v = ethutils.bufferToHex(signature.v)
+            signed_order.debtor_signature.r = ethutils.bufferToHex(signature.r)
+            signed_order.debtor_signature.s = ethutils.bufferToHex(signature.s)
+
             return request.post({
                 url: url + '/api/submit',
                 json: true,
                 body: signed_order,
             }, (error, response, body) => {
                 expect(error).to.not.exist
+                console.log(JSON.stringify(body))
+                expect(body.result).to.be.true
                 done()
             })
         })
@@ -45,7 +55,6 @@ describe('Debt Capital Market API', () => {
             url: url + '/api/get'
         }, (error, response, body) => {
             expect(error).to.not.exist
-            console.log(`Creditor assessing options: ${JSON.stringify(body, null, 2)}`)
             done()
         })
     })

@@ -16,8 +16,18 @@ api.post('/create', (request, response) => {
 
 api.post('/submit', (request, response) => {
     // verify signature
-    db.saveLoanRequest(request.body)
-    response.send('Submitting signed loan request to the order book')
+    const debtorSignature = false
+    if (debtorSignature) {
+        db.saveLoanRequest(request.body)
+        return response.json({
+            message: 'Signature looks good',
+            result: true
+        })
+    }
+    return response.json({
+        message: 'Signature looks BAD',
+        result: false
+    })
 })
 
 api.post('/cancel', (request, response) => {
