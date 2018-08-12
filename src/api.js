@@ -24,7 +24,7 @@ api.get('/cancel', (request, response) => {
 })
 
 api.get('/fill', (request, response) => {
-    response.send(`Filling loan request with creditor's signature`)
+    response.send(fillOrder(request.body))
 })
 
 export default api
