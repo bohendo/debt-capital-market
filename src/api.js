@@ -14,17 +14,17 @@ api.post('/create', (request, response) => {
     })
 })
 
-api.get('/submit', (request, response) => {
-
-    response.json(db.saveLoanRequests())
+api.post('/submit', (request, response) => {
+    // verify signature
+    db.saveLoanRequest(request.body)
     response.send('Submitting signed loan request to the order book')
 })
 
-api.get('/cancel', (request, response) => {
+api.post('/cancel', (request, response) => {
     response.send('Cancelling Loan request')
 })
 
-api.get('/fill', (request, response) => {
+api.post('/fill', (request, response) => {
     response.send(`Filling loan request with creditor's signature`)
 })
 
