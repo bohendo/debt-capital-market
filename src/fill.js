@@ -16,6 +16,7 @@ const fillOrder = async (body) => {
     orderData.creditorSignature = signature
 
     const txData = { from: $(process.env.ETH_ADDRESS) }
+    dharma.web3.personal.unlockAccount($(process.env.ETH_ADDRESS), fs.readFileSync(`/run/secrets/${tx.from}`, 'utf8')
     const tx = {
         txHash: await dharma.order.fillAscync(orderData, txData)
     }
