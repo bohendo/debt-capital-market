@@ -9,17 +9,18 @@ api.get('/get', (request, response) => {
 })
 
 api.post('/create', (request, response) => {
-    console.log(Object.keys(request.body))
-    response.json(createOrder(request.body))
+    return createOrder(request.body).then(order => {
+        return response.json(order)
+    })
 })
 
-api.get('/submit', (request, response) => {
-
-    response.json(db.saveLoanRequests())
+api.post('/submit', (request, response) => {
+    // verify signature
+    db.saveLoanRequest(request.body)
     response.send('Submitting signed loan request to the order book')
 })
 
-api.get('/cancel', (request, response) => {
+api.post('/cancel', (request, response) => {
     response.send('Cancelling Loan request')
 })
 

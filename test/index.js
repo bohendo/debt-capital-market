@@ -1,43 +1,11 @@
-const request = require('request')
+import request from 'request'
 import chai from 'chai'
+import mocks from './mocks'
+
+const { debtor_request } = mocks
 
 const expect = chai.expect
 const url = 'http://localhost:8000'
-
-const debtor_request = {
-    principalAmount: 5,
-    principalToken: "WETH",
-    collateralAmount: 100,
-    collateralToken: "REP",
-    interestRate: 12.3,
-    termDuration: 6,
-    termUnit: "months",
-    debtorAddress: "0xd2f45e02ab7b190ac9a87b743eab4c8f2ed0e491",
-    expiresInDuration: 5,
-    expiresInUnit: "days",
-}
-
-const agreement_id = {
-    version: '0x755e131019e5ab3e213dc269a4020e3e82e06e20',
-    debtor: '0xd2f45e02ab7b190ac9a87b743eab4c8f2ed0e491',
-    underwriter: '',
-    underwriterRiskRating: '',
-    termsContract: '',
-    termsContractParameters: '0x04000000000de0b6b3a7640000009c40200030000000001bc16d674ec8000',
-    salt: 'abc123'
-}
-
-const debtor_to_sign = {
-    agreementId: '',
-    underwriterFee: 0,
-    principalAmount: 5,
-    principalToken: "WETH",
-    debtorFee: 0,
-    creditorFee: 0,
-    relayer: process.env.ETH_ADDRESS,
-    relayerFee: debtor_request * 0.05,
-    expirationTimestampInSec: 60*60*24*5
-}
 
 describe('Debt Capital Market API', () => {
     it('should respond', () => {
@@ -47,19 +15,41 @@ describe('Debt Capital Market API', () => {
         })
     })
 
-    it('should give the client signable data if given a debtor request', () => {
-        request.post(url + '/api/create', debtor_request, (error, response, body) => {
+    it('send a debtor an order to sign then save it in the database', (done) => {
+        return request.post({
+            url: url + '/api/create',
+            json: true,
+            body: debtor_request,
+        }, (error, response, body) => {
             expect(error).to.not.exist
             expect(response).to.exist
-            console.log(JSON.stringify(body, null, 2))
+            expect(body.loanRequestHash).to.exist
+            // sign order
+            const signed_order = body
+            signed_order.v = 1
+            signed_order.r = 2
+            signed_order.s = 3
+            return request.post({
+                url: url + '/api/submit',
+                json: true,
+                body: signed_order,
+            }, (error, response, body) => {
+                expect(error).to.not.exist
+                done()
+            })
+        })
+    }).timeout(20000)
+
+    it('should give creditors a list of orders then broadcast ones they sign', () => {
+        return request.get({
+            url: url + '/api/get'
+        }, (error, response, body) => {
+            expect(error).to.not.exist
+            console.log(`Creditor assessing options: ${JSON.stringify(body, null, 2)}`)
+            done()
         })
     })
 
-    it('should save signed loan requests in the db', () => { })
-
-    it('should return a list of signed loan requests', () => { })
-
-    it('should sign & broadcast loan requests signed by a creditor', () => { })
 })
 
 

@@ -6,8 +6,8 @@
   "author": "Bo Henderson <bohende@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "watch": "./node_modules/.bin/webpack --watch --config ops/webpack.js & ./node_modules/.bin/nodemon build/dharma-api.js",
-    "start": "node build/dharma-api.js",
+    "watch": "./node_modules/.bin/webpack --watch --config ops/webpack.js & ./node_modules/.bin/nodemon --no-deprecation build/dharma-api.js",
+    "start": "node --no-deprecation build/dharma-api.js",
     "test": "./node_modules/.bin/mocha --require=babel-core/register --colors --slow=0 ./test"
   },
   "dependencies": {
